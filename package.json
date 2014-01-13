@@ -1,0 +1,38 @@
+{
+  "name": "grunt-template-precompile",
+  "description": "Grunt task to precompile the templates, replacing the strings inside the templates",
+  "version": "0.1.0",
+  "homepage": "",
+  "author": {
+    "name": [
+      "Pablo de Miranda"
+    ],
+    "email": "ymail-fe-dev@yahoo-inc.com",
+    "url": "http://backyard.yahoo.com/tools/g/employee/profile?user_id=pablolm"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-nodeunit": "~0.2.2",
+    "lodash": "~2.4.1"
+  },
+  "keywords": [
+    "module",
+    "templates",
+    "precompile",
+    "grunt-template-precompile"
+  ],
+  "peerDependencies": {
+    "grunt": "~0.4.2"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "main": "Gruntfile.js",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "/blob/master/LICENSE-MIT"
+    }
+  ]
+}
