@@ -93,7 +93,7 @@ exports.nodeunit = {
     },
 
     "should create a the template files inside each intl folder": function(test) {
-        var templates = helpers.get_templates('test/fixtures', '*.mu'),
+        var templates = helpers.get_templates('test/fixtures', '**/*.mu'),
             intls = helpers.get_intls('test/fixtures');
 
         test.ok(Array.isArray(templates));
@@ -106,7 +106,6 @@ exports.nodeunit = {
                     exists = grunt.file.exists(template_filepath);
                 test.ok(exists, 'should create a file: ' + template_filepath);
             });
-            
         });
 
         test.done();

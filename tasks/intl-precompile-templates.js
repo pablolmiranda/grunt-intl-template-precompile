@@ -31,10 +31,13 @@ module.exports = function(grunt) {
                 return intl_folder.replace(/\/\//, '/');
             },
 
-            compile_templates = function(templates, strObj) {
-                var compiled_templates = {};
+            compile_templates = function(_templates, strObj) {
+                var compiled_templates = {},
+                    templates = grunt.file.expand(_templates),
+                    base_folder = path.dirname(_templates).replace(/\*\*/, '');
+
                 templates.forEach(function(template){
-                    var template_name = path.basename(template),
+                    var template_name = template.replace(new RegExp(base_folder), ''),
                         template_content = grunt.file.read(template),
                         compiled_template = compiler.compile(template_content, strObj);
                     compiled_templates[template_name] = compiled_template;
@@ -56,11 +59,10 @@ module.exports = function(grunt) {
                     intl = extract_intl_name(intl_file),
                     strObj = iniparser.parseString(content),
                     compiled_templates = '',
-                    templates = grunt.file.expand(f.templates),
                     intl_folder = '';
 
                 intl_folder = create_intl_folder(f.dest, intl);
-                compiled_templates = compile_templates(templates, strObj);
+                compiled_templates = compile_templates(f.templates, strObj);
                 create_intl_templates(compiled_templates, intl_folder);
 
             });

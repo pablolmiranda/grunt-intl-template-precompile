@@ -14,7 +14,7 @@ module.exports = function(grunt) {
             dist: {
                 files: [{
                     src: ['test/fixtures/*.pres'],
-                    templates: ['test/fixtures/*.mu'],
+                    templates: ['test/fixtures/**/*.mu'],
                     dest: 'tmp/'
                 }]
             }
