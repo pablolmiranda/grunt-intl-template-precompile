@@ -6,13 +6,7 @@
 var grunt = require('grunt'),
     _ = require('lodash'),
     compiler = require('../tasks/lib/template_compiler').init(grunt),
-    string_occorence = function(string, token) {
-        var counter = 0;
-        string.replace(new RegExp(token, 'g'), function(){
-            counter++;
-        });
-        return counter;
-    };
+    helpers = require('./test_helpers.js').init(grunt);
 
 exports.nodeunit = {
     "should replace a single string inside the template": function(test) {
@@ -37,7 +31,7 @@ exports.nodeunit = {
 
         compiled_template = compiler.compile(template, strings);
 
-        test.equal(2, string_occorence(compiled_template, "string replaced"), 'the references to the string should be different');
+        test.equal(2, helpers.string_occorence(compiled_template, "string replaced"), 'the references to the string should be different');
 
         test.done();
     },
@@ -52,8 +46,8 @@ exports.nodeunit = {
 
         compiled_template = compiler.compile(template, strings);
 
-        test.equal(1, string_occorence(compiled_template, strings.str_first_replace), 'should replace str_first_replace inside the template');
-        test.equal(1, string_occorence(compiled_template, strings.str_second_replace), 'should replace str_second_replace inside the template');
+        test.equal(1, helpers.string_occorence(compiled_template, strings.str_first_replace), 'should replace str_first_replace inside the template');
+        test.equal(1, helpers.string_occorence(compiled_template, strings.str_second_replace), 'should replace str_second_replace inside the template');
 
         test.done();
     },
@@ -67,8 +61,8 @@ exports.nodeunit = {
 
         compiled_template = compiler.compile(template, strings);
 
-        test.equal(1, string_occorence(compiled_template, strings.str_to_be_replaced), 'should replace str_to_be_replaced inside the template');
-        test.equal(1, string_occorence(compiled_template, '{{str_to_not_be_replaced}}'), 'should keep the the string {{str_to_not_be_replaced}}');
+        test.equal(1, helpers.string_occorence(compiled_template, strings.str_to_be_replaced), 'should replace str_to_be_replaced inside the template');
+        test.equal(1, helpers.string_occorence(compiled_template, '{{str_to_not_be_replaced}}'), 'should keep the the string {{str_to_not_be_replaced}}');
 
         test.done();
     },
@@ -80,10 +74,41 @@ exports.nodeunit = {
             },
             compiled_template = "";
 
-        console.log('calling compiler');
         compiled_template = compiler.compile(template, strings);
         
-        test.equal(3, string_occorence(compiled_template, strings.str_to_be_replaced, 'should replace all references, with or without whitespace'));
+        test.equal(3, helpers.string_occorence(compiled_template, strings.str_to_be_replaced, 'should replace all references, with or without whitespace'));
+        test.done();
+    },
+
+    "should create the intl folder": function(test) {
+        var intls = helpers.get_intls('test/fixtures');
+
+        test.notEqual(0, intls.length, 'it should have at least 1 intl to test run');
+
+        intls.forEach(function(intl) {
+            var intl_folder = 'tmp/' + intl;
+            test.ok(grunt.file.isDir( intl_folder ), 'should create a folder for ' + intl + ' intl');
+        });
+        test.done();
+    },
+
+    "should create a the template files inside each intl folder": function(test) {
+        var templates = helpers.get_templates('test/fixtures', '*.mu'),
+            intls = helpers.get_intls('test/fixtures');
+
+        test.ok(Array.isArray(templates));
+        test.notEqual(0, intls.length);
+
+        intls.forEach(function(intl){
+            var intl_folder = 'tmp/' + intl;
+            templates.forEach(function(template){
+                var template_filepath = intl_folder + '/' + template,
+                    exists = grunt.file.exists(template_filepath);
+                test.ok(exists, 'should create a file: ' + template_filepath);
+            });
+            
+        });
+
         test.done();
     }
 };
