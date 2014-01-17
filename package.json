@@ -10,11 +10,14 @@
     "email": "ymail-fe-dev@yahoo-inc.com",
     "url": "http://backyard.yahoo.com/tools/g/employee/profile?user_id=pablolm"
   },
-  "dependencies": {},
+  "dependencies": {
+    "iniparser": "~1.0.5"
+  },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-nodeunit": "~0.2.2",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "grunt-contrib-clean": "~0.5.0"
   },
   "keywords": [
     "module",
