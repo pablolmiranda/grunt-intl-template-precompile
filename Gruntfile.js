@@ -10,7 +10,7 @@ module.exports = function(grunt) {
             all: ['test/test.js']
         },
 
-        "intl-precompile-templates": {
+        "intl-template-precompile": {
             dist: {
                 files: [{
                     src: ['test/fixtures/*.pres'],
@@ -28,5 +28,5 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['nodeunit']);
 
-    grunt.registerTask('default', ['clean', 'intl-precompile-templates:dist', 'test']);
+    grunt.registerTask('default', ['clean', 'intl-template-precompile:dist', 'test']);
 }

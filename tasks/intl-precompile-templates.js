@@ -6,7 +6,7 @@ module.exports = function(grunt) {
         path = require('path'),
         intl_file_regex = /lang_(.*).pres/;
 
-    grunt.registerMultiTask('intl-precompile-templates', 'Based on a intl file generate a precompile template file', function(){
+    grunt.registerMultiTask('intl-template-precompile', 'Based on a intl file generate a precompile template file', function(){
 
         var options = this.options(),
             intl_filename_pattern = options.intl_filename_patterns || void(0),
